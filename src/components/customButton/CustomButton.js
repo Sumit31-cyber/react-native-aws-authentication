@@ -36,13 +36,19 @@ const styles = StyleSheet.create({
     },
     text: {
         fontWeight: 'bold',
-        color: '#ffff'
+        color: '#ffff',
+
+        textTransform: 'uppercase',
+        letterSpacing: 1.5
     },
     text_TERTIARY: {
-        color: 'grey'
+        color: 'grey',
+        textTransform: 'capitalize',
+
     },
     text_SECONDARY: {
-        color: '#bd8aff'
+        color: '#bd8aff',
+
     },
 })
 

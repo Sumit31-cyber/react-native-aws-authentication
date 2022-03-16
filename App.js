@@ -10,6 +10,7 @@ import SigninScreen from './src/screens/signinScreen/SigninScreen';
 import SignUpScreen from './src/screens/signUpScreen';
 import ConfirmEmailScreen from './src/screens/ConfirmEmailScreen';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
+import NewPasswordScreen from './src/screens/NewPasswordScreen';
 
 const App = () => {
 
@@ -19,7 +20,7 @@ const App = () => {
       <StatusBar backgroundColor='#F9FBFC'
         barStyle={'dark-content'}
       />
-      <ForgotPasswordScreen />
+      <NewPasswordScreen />
     </SafeAreaView>
   );
 };
