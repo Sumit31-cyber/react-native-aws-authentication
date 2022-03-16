@@ -4,16 +4,7 @@ import CustomInput from '../../components/customInput/CustomInput'
 import logo from '../../../assets/images/Logo_1.png'
 import CustomButton from '../../components/customButton'
 import SocialSignInButtons from '../../components/SocialSignInButtons'
-
-const onSignInPressed = () => {
-    console.warn("You Just Pressed me");
-}
-const onForgotPasswordPressed = () => {
-    console.warn("You Forgot to Press me");
-}
-const onSignUpPressed = () => {
-    console.warn("You just Signed me to Cum inside");
-}
+import { useNavigation } from '@react-navigation/native'
 
 
 
@@ -22,13 +13,26 @@ const SigninScreen = () => {
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('')
 
+    const navigation = useNavigation();
+
     const { height } = useWindowDimensions();
+
+    const onSignInPressed = () => {
+        navigation.navigate('HomeScreen')
+    }
+    const onForgotPasswordPressed = () => {
+        navigation.navigate('ForgotPasswordScreen')
+    }
+    const onSignUpPressed = () => {
+        navigation.navigate('SignUpScreen')
+    }
+
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
         >
             <View style={styles.root}>
-                <Image style={[styles.logo, { height: height * 0.3 }]}
+                <Image style={[styles.logo, { height: height * 0.2 }]}
                     resizeMode='contain'
                     source={logo}
                 />

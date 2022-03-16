@@ -3,22 +3,27 @@ import React, { useState } from 'react'
 import CustomInput from '../../components/customInput/CustomInput'
 import CustomButton from '../../components/customButton'
 import SocialSignInButtons from '../../components/SocialSignInButtons'
+import { useNavigation } from '@react-navigation/native'
 
 
-const onConfirmPressed = () => {
-    console.warn("Confirmed");
-}
-const onSignInPressed = () => {
-    console.warn("You just Pressed SignIn");
-}
-const onResendPressed = () => {
-    console.warn("Resend");
-}
+
 
 
 const ConfirmEmailScreen = () => {
 
     const [code, setCode] = useState('')
+
+    const navigation = useNavigation();
+
+    const onConfirmPressed = () => {
+        navigation.navigate('HomeScreen')
+    }
+    const onSignInPressed = () => {
+        navigation.navigate('SignInScreen')
+    }
+    const onResendPressed = () => {
+        console.warn("Resend");
+    }
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -38,12 +43,12 @@ const ConfirmEmailScreen = () => {
 
                 <CustomButton
                     text={"Resend Code"}
-                    onPress={onSignInPressed}
+                    onPress={onResendPressed}
                     type='SECONDARY'
                 />
                 <CustomButton
                     text={"Back to Sign in"}
-                    onPress={onResendPressed}
+                    onPress={onSignInPressed}
                     type='TERTIARY'
                 />
             </View>

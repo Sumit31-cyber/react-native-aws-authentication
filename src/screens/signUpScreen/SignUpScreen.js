@@ -3,20 +3,8 @@ import React, { useState } from 'react'
 import CustomInput from '../../components/customInput/CustomInput'
 import CustomButton from '../../components/customButton'
 import SocialSignInButtons from '../../components/SocialSignInButtons'
+import { useNavigation } from '@react-navigation/native'
 
-
-const onRegisterPressed = () => {
-    console.warn("You Just Registered me");
-}
-const onSignInPressed = () => {
-    console.warn("You just Pressed SignIn");
-}
-const onTermOfUsePressed = () => {
-    console.warn("On Term of use Pressed");
-}
-const onPrivecyPressed = () => {
-    console.warn("Privecy ");
-}
 
 
 
@@ -28,6 +16,23 @@ const SignUpScreen = () => {
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
     const [confirmPass, setConfirmPass] = useState('')
+
+    const navigation = useNavigation();
+
+
+    const onRegisterPressed = () => {
+        navigation.navigate('ConfirmEmailScreen')
+    }
+    const onSignInPressed = () => {
+        navigation.navigate('SignInScreen')
+    }
+    const onTermOfUsePressed = () => {
+        console.warn("On Term of use Pressed");
+    }
+    const onPrivecyPressed = () => {
+        console.warn("Privecy ");
+    }
+
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}

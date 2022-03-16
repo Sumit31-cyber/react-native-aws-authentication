@@ -2,21 +2,23 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import CustomInput from '../../components/customInput/CustomInput'
 import CustomButton from '../../components/customButton'
-import SocialSignInButtons from '../../components/SocialSignInButtons'
+import { useNavigation } from '@react-navigation/native'
 
 
-const onSignInPressed = () => {
-    console.warn("You just Pressed SignIn");
-}
-const onSubmitPressed = () => {
-    console.warn("Submitting....");
-}
 
 
 const NewPasswordScreen = () => {
 
     const [code, setCode] = useState('')
     const [newPasseord, setNewPasseord] = useState('')
+
+    const navigation = useNavigation()
+    const onSignInPressed = () => {
+        navigation.navigate('SignInScreen')
+    }
+    const onSubmitPressed = () => {
+        navigation.navigate('HomeScreen')
+    }
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
