@@ -5,13 +5,16 @@ import CustomButton from '../../components/customButton'
 import SocialSignInButtons from '../../components/SocialSignInButtons'
 import { useNavigation } from '@react-navigation/native'
 
+import { useForm } from 'react-hook-form'
+
 
 
 
 
 const ConfirmEmailScreen = () => {
+    const { control, handleSubmit, formState: { errors } } = useForm();
 
-    const [code, setCode] = useState('')
+    // const [code, setCode] = useState('')
 
     const navigation = useNavigation();
 
@@ -30,15 +33,21 @@ const ConfirmEmailScreen = () => {
         >
             <View style={styles.root}>
                 <Text style={styles.title}>Confirm Your Email</Text>
-                <CustomInput
+                {/* <CustomInput
                     placeholder={'Enter your confirmation code'}
                     value={code}
                     setValue={setCode}
+                /> */}
+                <CustomInput
+                    rules={{ required: 'Please Enter code to continue' }}
+                    name="username"
+                    placeholder={'Enter your confirmation code'}
+                    control={control}
                 />
 
                 <CustomButton
                     text={"Confirm"}
-                    onPress={onConfirmPressed}
+                    onPress={handleSubmit(onConfirmPressed)}
                 />
 
                 <CustomButton

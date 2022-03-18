@@ -3,13 +3,16 @@ import React, { useState } from 'react'
 import CustomInput from '../../components/customInput/CustomInput'
 import CustomButton from '../../components/customButton'
 import { useNavigation } from '@react-navigation/native'
+import { useForm } from 'react-hook-form'
+
 
 
 
 const ForgotPassword = () => {
+    const { control, handleSubmit, formState: { errors } } = useForm();
 
 
-    const [userName, setUserName] = useState('')
+    // const [userName, setUserName] = useState('')
 
     const navigation = useNavigation();
 
@@ -27,15 +30,17 @@ const ForgotPassword = () => {
         >
             <View style={styles.root}>
                 <Text style={styles.title}>Reset Your Password</Text>
+
                 <CustomInput
-                    placeholder={'User Name*'}
-                    value={userName}
-                    setValue={setUserName}
+                    rules={{ required: 'Please Enter User name to continue*' }}
+                    name="username"
+                    placeholder={'UserName'}
+                    control={control}
                 />
 
                 <CustomButton
                     text={"Send"}
-                    onPress={onSendPressed}
+                    onPress={handleSubmit(onSendPressed)}
                 />
 
                 <CustomButton
