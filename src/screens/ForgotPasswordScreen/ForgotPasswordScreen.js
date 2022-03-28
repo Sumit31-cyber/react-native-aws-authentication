@@ -4,7 +4,8 @@ import CustomInput from '../../components/customInput/CustomInput'
 import CustomButton from '../../components/customButton'
 import { useNavigation } from '@react-navigation/native'
 import { useForm } from 'react-hook-form'
-
+import { Auth } from 'aws-amplify'
+import { Alert } from 'react-native'
 
 
 
@@ -16,11 +17,20 @@ const ForgotPassword = () => {
 
     const navigation = useNavigation();
 
+
+    const onSendPressed = async (data) => {
+        try {
+            await Auth.forgotPassword(data.username)
+            navigation.navigate('NewPasswordScreen')
+
+        } catch (e) {
+            Alert.alert('opps...', e.message)
+        }
+
+    }
+
     const onSignInPressed = () => {
         navigation.navigate('SignInScreen')
-    }
-    const onSendPressed = () => {
-        navigation.navigate('NewPasswordScreen')
     }
 
 

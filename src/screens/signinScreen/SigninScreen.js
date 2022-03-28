@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, useWindowDimensions, ScrollView, TextInput } from 'react-native'
+import { StyleSheet, Text, View, Image, useWindowDimensions, ScrollView, TextInput, Alert } from 'react-native'
 import React, { useState } from 'react'
 import CustomInput from '../../components/customInput/CustomInput'
 import logo from '../../../assets/images/Logo_1.png'
@@ -6,6 +6,7 @@ import CustomButton from '../../components/customButton'
 import SocialSignInButtons from '../../components/SocialSignInButtons'
 import { useNavigation } from '@react-navigation/native'
 import { useForm } from 'react-hook-form'
+import { Auth } from 'aws-amplify'
 
 
 
@@ -15,23 +16,37 @@ const SigninScreen = () => {
     // const [password, setPassword] = useState('')
 
     const { control, handleSubmit, formState: { errors } } = useForm();
+    const [loading, setLoading] = useState(false);
 
     const navigation = useNavigation();
 
     const { height } = useWindowDimensions();
 
     console.log(errors);
-    const onSignInPressed = (data) => {
-        console.log(data)
-        navigation.navigate('HomeScreen')
-    }
-    const onForgotPasswordPressed = () => {
-        navigation.navigate('ForgotPasswordScreen')
-    }
+
     const onSignUpPressed = () => {
+
         navigation.navigate('SignUpScreen')
     }
 
+    const onSignInPressed = async (data) => {
+        if (loading) {
+            return;
+        }
+        setLoading(true);
+        try {
+            const response = await Auth.signIn(data.username, data.password);
+            console.log(response)
+            navigation.navigate('HomeScreen')
+
+        } catch (e) {
+            Alert.alert('Opps..', e.message)
+        }
+        setLoading(false);
+    }
+    const onForgotPasswordPressed = () => {
+        navigation.navigate('ForgotPasswordScreen',)
+    }
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -54,11 +69,8 @@ const SigninScreen = () => {
                     placeholder={'Password'}
                     control={control}
                 />
-
-
-
                 <CustomButton
-                    text={"Sign In"}
+                    text={loading ? 'loading...' : "Sign In"}
                     onPress={handleSubmit(onSignInPressed)}
                 />
                 <CustomButton

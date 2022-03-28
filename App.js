@@ -7,8 +7,13 @@ import {
   Text,
 } from 'react-native';
 import Navigation from './src/Navigation';
+import Amplify from 'aws-amplify';
+import config from './src/aws-exports';
+
+Amplify.configure(config);
 
 const App = () => {
+  // Auth.signOut();
 
   return (
     <SafeAreaView style={styles.root}>
@@ -26,5 +31,6 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
 
 export default App;

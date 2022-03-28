@@ -4,6 +4,8 @@ import CustomInput from '../../components/customInput/CustomInput'
 import CustomButton from '../../components/customButton'
 import { useNavigation } from '@react-navigation/native'
 import { useForm } from 'react-hook-form'
+import { Auth } from 'aws-amplify'
+import { Alert } from 'react-native'
 
 
 
@@ -19,8 +21,13 @@ const NewPasswordScreen = () => {
     const onSignInPressed = () => {
         navigation.navigate('SignInScreen')
     }
-    const onSubmitPressed = () => {
-        navigation.navigate('HomeScreen')
+    const onSubmitPressed = async (data) => {
+        try {
+            await Auth.forgotPasswordSubmit(data.username, data.code, data.password)
+            navigation.navigate('SignInScreen')
+        } catch (e) {
+            Alert.alert('opps...', e.message)
+        }
     }
     return (
         <ScrollView
@@ -34,8 +41,14 @@ const NewPasswordScreen = () => {
                     setValue={setCode}
                 /> */}
                 <CustomInput
+                    rules={{ required: 'Please Enter Username' }}
+                    name="username"
+                    placeholder={'UserName'}
+                    control={control}
+                />
+                <CustomInput
                     rules={{ required: 'Please Enter Verification Code' }}
-                    name="Code"
+                    name="code"
                     placeholder={'Code'}
                     control={control}
                 />
@@ -47,6 +60,7 @@ const NewPasswordScreen = () => {
                 <CustomInput
                     rules={{ required: 'Please Enter password to continue*' }}
                     name="password"
+                    secureTextEntry={true}
                     placeholder={'password'}
                     control={control}
                 />

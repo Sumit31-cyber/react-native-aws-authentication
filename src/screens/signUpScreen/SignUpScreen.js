@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Alert } from 'react-native'
 import React, { useState } from 'react'
 import CustomInput from '../../components/customInput/CustomInput'
 import CustomButton from '../../components/customButton'
 import SocialSignInButtons from '../../components/SocialSignInButtons'
 import { useNavigation } from '@react-navigation/native'
 import { useForm } from 'react-hook-form'
+import { Auth } from 'aws-amplify'
 
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
@@ -19,8 +20,19 @@ const SignUpScreen = () => {
 
     const navigation = useNavigation();
 
-    const onRegisterPressed = () => {
-        navigation.navigate('ConfirmEmailScreen')
+    const onRegisterPressed = async (data) => {
+        const { username, password, email, name } = data;
+        try {
+            const response = Auth.signUp({
+                username,
+                password,
+                attributes:
+                    { email, name, preferred_username: username },
+            })
+            navigation.navigate('ConfirmEmailScreen', { username })
+        } catch (e) {
+            Alert.alert('opps', e.message)
+        }
     }
     const onSignInPressed = () => {
         navigation.navigate('SignInScreen')
@@ -39,9 +51,29 @@ const SignUpScreen = () => {
             <View style={styles.root}>
                 <Text style={styles.title}>Create an account</Text>
                 <CustomInput
-                    rules={{ required: 'Please Enter User name to continue*' }}
+                    rules={{
+                        required: 'Please Enter User name to continue*',
+                        minLength: {
+                            value: 3,
+                            message: 'username sholud be at lease 3 character long'
+                        }
+
+                    }}
                     name="username"
                     placeholder={'UserName'}
+                    control={control}
+                />
+                <CustomInput
+                    rules={{
+                        required: 'Please Enter name to continue*',
+                        minLength: {
+                            value: 3,
+                            message: 'full name sholud be at lease 3 character long'
+                        }
+
+                    }}
+                    name="name"
+                    placeholder={'Name'}
                     control={control}
                 />
                 <CustomInput
@@ -72,7 +104,7 @@ const SignUpScreen = () => {
                     }}
                     name="confirmPassword"
                     secureTextEntry={true}
-                    placeholder={'Enter your confirmation code'}
+                    placeholder={'Repeat pawweord'}
                     control={control}
                 />
                 <CustomButton
