@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Image, useWindowDimensions } from 'react-native'
 import React, { useState } from 'react'
+import logo from '../../../assets/images/reset_pass.png'
 import CustomInput from '../../components/customInput/CustomInput'
 import CustomButton from '../../components/customButton'
 import { useNavigation } from '@react-navigation/native'
@@ -10,9 +11,9 @@ import { Alert } from 'react-native'
 
 
 
-
 const NewPasswordScreen = () => {
     const { control, handleSubmit, formState: { errors } } = useForm();
+    const { height } = useWindowDimensions();
 
     // const [code, setCode] = useState('')
     // const [newPasseord, setNewPasseord] = useState('')
@@ -33,6 +34,17 @@ const NewPasswordScreen = () => {
         <ScrollView
             showsVerticalScrollIndicator={false}
         >
+            <View style={{
+                marginTop: 5,
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
+                <Image style={[styles.logo, { height: height * 0.3 }]}
+                    resizeMode='contain'
+                    source={logo}
+                />
+            </View>
+
             <View style={styles.root}>
                 <Text style={styles.title}>Reset Your Password</Text>
                 {/* <CustomInput
@@ -98,6 +110,11 @@ const styles = StyleSheet.create({
     },
     link: {
         color: '#FDB075'
+    },
+    logo: {
+        width: '70%',
+        maxWidth: 300,
+        maxHeight: 200,
     }
 })
 export default NewPasswordScreen

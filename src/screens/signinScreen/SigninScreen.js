@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image, useWindowDimensions, ScrollView, TextInput, Alert } from 'react-native'
 import React, { useState } from 'react'
 import CustomInput from '../../components/customInput/CustomInput'
-import logo from '../../../assets/images/Logo_1.png'
+import logo from '../../../assets/images/logo.png'
 import CustomButton from '../../components/customButton'
 import SocialSignInButtons from '../../components/SocialSignInButtons'
 import { useNavigation } from '@react-navigation/native'
